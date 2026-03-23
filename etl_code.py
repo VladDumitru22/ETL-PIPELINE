@@ -53,7 +53,7 @@ def extract():
 def transform(data):
     '''Convert inches to meters and round off to two decimals 
     1 inch is 0.0254 meters '''
-    data['height'] = round(data.height * 0.0254)
+    data['height'] = round(data.height * 0.0254, 2)
 
     '''Convert pounds to kilograms and round off to two decimals 
     1 pound is 0.45359237 kilograms '''
@@ -70,4 +70,33 @@ def log_progress(message):
     now = datetime.now()
     timestamp = now.strftime(timestamp_format)
     with open(LOG_FILE, "a") as f:
-        f.write(timestamp + ',' + message, '\n')
+        f.write(timestamp + ',' + message + '\n')
+
+# Log the initialization of the ETL process 
+log_progress("ETL Job Started") 
+ 
+# Log the beginning of the Extraction process 
+log_progress("Extract phase Started") 
+extracted_data = extract() 
+ 
+# Log the completion of the Extraction process 
+log_progress("Extract phase Ended") 
+ 
+# Log the beginning of the Transformation process 
+log_progress("Transform phase Started") 
+transformed_data = transform(extracted_data) 
+print("Transformed Data") 
+print(transformed_data) 
+ 
+# Log the completion of the Transformation process 
+log_progress("Transform phase Ended") 
+ 
+# Log the beginning of the Loading process 
+log_progress("Load phase Started") 
+load_data(TARGET_FILE,transformed_data) 
+ 
+# Log the completion of the Loading process 
+log_progress("Load phase Ended") 
+ 
+# Log the completion of the ETL process 
+log_progress("ETL Job Ended") 
