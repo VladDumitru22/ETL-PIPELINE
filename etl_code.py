@@ -44,4 +44,19 @@ def extract():
         extracted_data = pd.concat([extracted_data, pd.DataFrame(extract_from_xml(xmlfile))], ignore_index=True)
     
     #return all extracted data
-    return extracted_data
+    return extracted_data\
+    
+
+# The height in the extracted data is in inches, and the weight is in pounds.
+# The height is required to be in meters and the weight is required to be in kilograms, rounded to two decimal places.
+
+def transform(data):
+    '''Convert inches to meters and round off to two decimals 
+    1 inch is 0.0254 meters '''
+    data['height'] = round(data.height * 0.0254)
+
+    '''Convert pounds to kilograms and round off to two decimals 
+    1 pound is 0.45359237 kilograms '''
+    data['weight'] = round(data.weight * 0.45359237, 2)
+
+    return data
