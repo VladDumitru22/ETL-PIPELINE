@@ -60,3 +60,14 @@ def transform(data):
     data['weight'] = round(data.weight * 0.45359237, 2)
 
     return data
+
+def load_data(target_file, transformed_data: pd.DataFrame):
+    transformed_data.to_csv(target_file)
+
+def log_progress(message):
+    # Year-Monthname-Day-Hour-Minute-Second 
+    timestamp_format = '%Y-%h-%d-%H:%M:%S'
+    now = datetime.now()
+    timestamp = now.strftime(timestamp_format)
+    with open(LOG_FILE, "a") as f:
+        f.write(timestamp + ',' + message, '\n')
